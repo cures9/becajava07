@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import com.everis.alicante.courses.becajava.garage.controller.ControladorExcepciones;
 import com.everis.alicante.courses.becajava.garage.controller.ControladorExcepcionesImpl;
 import com.everis.alicante.courses.becajava.garage.controller.ControladorGaraje;
@@ -16,6 +18,8 @@ import com.everis.alicante.courses.becajava.garage.domain.Plaza;
 
 public class GarageMain {
 
+		static Logger log = Logger.getLogger(GarageMain.class);
+	
 		static Garaje garaje;
 		
 		static ControladorGaraje controlador;		
