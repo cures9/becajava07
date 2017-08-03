@@ -1,12 +1,13 @@
-package com.everis.alicante.courses.becajava.garage;
+package com.everis.alicante.courses.becajava.garage.interfaces;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import com.everis.alicante.courses.becajava.garage.domain.Cliente;
 import java.sql.*;
 
-public interface ClientDAOJDBC {
+public interface ClienteDAOJDBC {
 	
  Map<String,Cliente> readClientes() throws IOException;
 	 
@@ -17,6 +18,6 @@ public interface ClientDAOJDBC {
 	 void deleteCliente(String nif);
 	 
 	 public Connection getConnection() throws IOException;
-	 public Map<String,Cliente> readAll();
+	 public List<Cliente> readAll();
 	
 }

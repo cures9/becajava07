@@ -18,5 +18,6 @@ public interface ControladorGaraje {
 	void insertarVehiculo() throws GarajeException;
 	void borrarVehiculo() throws GarajeException;
 	void readVehiculo() throws GarajeException;
+	void leerTodosVehiculos() throws GarajeException;
 
 }

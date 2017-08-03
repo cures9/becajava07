@@ -4,10 +4,14 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import com.everis.alicante.courses.becajava.garage.VehiculoDAOJDBC;
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
+import org.apache.log4j.Logger;
+
 import com.everis.alicante.courses.becajava.garage.domain.Camion;
 import com.everis.alicante.courses.becajava.garage.domain.Cliente;
 import com.everis.alicante.courses.becajava.garage.domain.Coche;
@@ -21,6 +25,7 @@ import com.everis.alicante.courses.becajava.garage.interfaces.ClienteDAO;
 import com.everis.alicante.courses.becajava.garage.interfaces.PlazaDAO;
 import com.everis.alicante.courses.becajava.garage.interfaces.ReservaDAO;
 import com.everis.alicante.courses.becajava.garage.interfaces.VehiculoDAO;
+import com.everis.alicante.courses.becajava.garage.interfaces.VehiculoDAOJDBC;
 import com.everis.alicante.courses.becajava.garage.interfaces.implementation.ClienteDAOFileImpl;
 import com.everis.alicante.courses.becajava.garage.interfaces.implementation.PlazaDAOFileImp;
 import com.everis.alicante.courses.becajava.garage.interfaces.implementation.ReservaDAOFileImp;
@@ -30,8 +35,8 @@ import com.everis.alicante.courses.becajava.garage.utils.ValidadorNIF;
 
 public class ControladorGarajeImpl implements ControladorGaraje{
 
-	private String returnVehiculo;
-
+	static Logger log=Logger.getLogger(ControladorGarajeImpl.class);
+	
 	@Override
 	public Map<Integer,Plaza> listarPlazasLibres() throws GarajeException {
 		
@@ -117,7 +122,7 @@ public class ControladorGarajeImpl implements ControladorGaraje{
 			while(!nifCorrecto){
 				System.out.println("Inserte el nif del cliente");	
 				in = new Scanner(System.in);
-				nif=in.nextLine();
+				nif=in.nextLine();				
 				nifCorrecto=ValidadorNIF.validaNif(nif);	
 				if(nifCorrecto==false){
 					System.out.println("NIF INCORRECTO");
@@ -301,19 +306,65 @@ public class ControladorGarajeImpl implements ControladorGaraje{
 
 	@Override
 	public void insertarVehiculo() throws GarajeException {
-		// TODO Auto-generated method stub
-		VehiculoDAOJDBC vehiculoDAOJDBC = new VehiculoDAOJDBCImpl();
-		Vehiculo vehiculo = new Vehiculo();
 		
-		vehiculo.setMatricula("99999");
-		vehiculo.setTipoVehiculo("1");
+		VehiculoDAOJDBC vehiculoJDBC = new VehiculoDAOJDBCImpl();
+		Vehiculo vehiculo = new Vehiculo();
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Introduce la matricula");
+		vehiculo.setMatricula(sc.nextLine());
+		System.out.println("Introduce el tipo de vehiculo");
+		vehiculo.setTipoVehiculo(sc.nextLine());
 		
 		try {
-			vehiculoDAOJDBC.createVehiculo(vehiculo);
+			vehiculoJDBC.create(vehiculo);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void eliminarVehiculo() throws GarajeException {
+		
+		VehiculoDAOJDBC vehiculoJDBC = new VehiculoDAOJDBCImpl();
+		
+		Scanner sc = new Scanner(System.in);
+		try {
+			System.out.println("Introduce la matricula que quieres eliminar");
+			vehiculoJDBC.delete(sc.nextLine());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void leerVehiculo() throws GarajeException {
+		// TODO Auto-generated method stub
+		VehiculoDAOJDBC vehiculoJDBC = new VehiculoDAOJDBCImpl();
+		Scanner sc = new Scanner(System.in);
+		try {
+			System.out.println("Introduce la matricula que quieras recuperar");
+			vehiculoJDBC.read(sc.nextLine());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public void leerTodosVehiculos() throws GarajeException {
+		VehiculoDAOJDBC vehiculoJDBC = new VehiculoDAOJDBCImpl();
+		
+		List<Vehiculo> listaVehiculos = vehiculoJDBC.readAll();
+		
+		for (Iterator<Vehiculo> iterator = listaVehiculos.iterator(); iterator.hasNext();) {
+			Vehiculo vehiculo = (Vehiculo) iterator.next();
+			System.out.println("La matricula es: " + vehiculo.getMatricula() 
+				+ " y el tipo de vehiculo es: " + vehiculo.getTipoVehiculo());
+		}
+		
 		
 	}
 
@@ -329,10 +380,4 @@ public class ControladorGarajeImpl implements ControladorGaraje{
 		
 	}
 
-	@SuppressWarnings("unused")
-	private void listarAllVehiculos() {
-		
-		System.out.println("Recuperando la lista de vehiculos: " + returnVehiculo);
-	}
-	
 }
