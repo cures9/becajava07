@@ -1,10 +1,13 @@
 package com.everis.alicante.courses.becajava.garage.controller;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
+
+import com.everis.alicante.courses.becajava.garage.VehiculoDAOJDBC;
 import com.everis.alicante.courses.becajava.garage.domain.Camion;
 import com.everis.alicante.courses.becajava.garage.domain.Cliente;
 import com.everis.alicante.courses.becajava.garage.domain.Coche;
@@ -22,9 +25,12 @@ import com.everis.alicante.courses.becajava.garage.interfaces.implementation.Cli
 import com.everis.alicante.courses.becajava.garage.interfaces.implementation.PlazaDAOFileImp;
 import com.everis.alicante.courses.becajava.garage.interfaces.implementation.ReservaDAOFileImp;
 import com.everis.alicante.courses.becajava.garage.interfaces.implementation.VehiculoDAOFileImpl;
+import com.everis.alicante.courses.becajava.garage.interfaces.implementation.VehiculoDAOJDBCImpl;
 import com.everis.alicante.courses.becajava.garage.utils.ValidadorNIF;
 
 public class ControladorGarajeImpl implements ControladorGaraje{
+
+	private String returnVehiculo;
 
 	@Override
 	public Map<Integer,Plaza> listarPlazasLibres() throws GarajeException {
@@ -293,4 +299,40 @@ public class ControladorGarajeImpl implements ControladorGaraje{
 		
 	}
 
+	@Override
+	public void insertarVehiculo() throws GarajeException {
+		// TODO Auto-generated method stub
+		VehiculoDAOJDBC vehiculoDAOJDBC = new VehiculoDAOJDBCImpl();
+		Vehiculo vehiculo = new Vehiculo();
+		
+		vehiculo.setMatricula("99999");
+		vehiculo.setTipoVehiculo("1");
+		
+		try {
+			vehiculoDAOJDBC.createVehiculo(vehiculo);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public void borrarVehiculo() throws GarajeException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void readVehiculo() throws GarajeException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@SuppressWarnings("unused")
+	private void listarAllVehiculos() {
+		
+		System.out.println("Recuperando la lista de vehiculos: " + returnVehiculo);
+	}
+	
 }

@@ -51,6 +51,9 @@ public class GarageMain {
 		System.out.println("5:Listar Reservas");
 		System.out.println("6:Listar Vehiculos");
 		System.out.println("7:Listar por Fecha de Reserva");
+		System.out.println("8:Insertar Vehiculo");
+		System.out.println("9:Borrar vehiculo");
+		System.out.println("10:Leer vehiculos");
 		
 		try {
 		
@@ -85,6 +88,15 @@ public class GarageMain {
 				case 7:	
 					validarFechasEntrada();
 					controlador.listarReservasByFecha(fechaInicio, fechaFin);		
+					break;
+				case 8:
+					controlador.insertarVehiculo();
+					break;
+				case 9:
+					controlador.borrarVehiculo();
+					break;
+				case 10:
+					controlador.readVehiculo();
 					break;
 				default:
 					System.out.println("Error");
