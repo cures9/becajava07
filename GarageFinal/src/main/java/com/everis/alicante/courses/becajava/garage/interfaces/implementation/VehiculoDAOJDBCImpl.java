@@ -3,38 +3,45 @@ package com.everis.alicante.courses.becajava.garage.interfaces.implementation;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.everis.alicante.courses.becajava.garage.domain.Vehiculo;
+import com.everis.alicante.courses.becajava.garage.interfaces.VehiculoDAOJDBC;
 
-public class VehiculoDAOJDBCImpl implements com.everis.alicante.courses.becajava.garage.interfaces.VehiculoDAOJDBC{
+
+public class VehiculoDAOJDBCImpl implements VehiculoDAOJDBC{
 
 	private final String MYSQL_JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	private final String JDBC_CADENA_CONEXION = "jdbc:mysql://localhost:3306/garaje";
 	private final String JDBC_USR = "root";
 	private final String JDBC_PWD = "";
 	
+	@Override
 	public void create(Vehiculo vehiculo) throws IOException {
+		
 		Connection cn = null;
-		Statement st = null;
+		PreparedStatement pst = null;
 		
 		try {
 			
-			cn = this.getConnection();
-			st = cn.createStatement();
-			
 			String sql = "INSERT INTO VEHICULOS(MATRICULA, TIPO_VEHICULO)"
-					+ " VALUES ('" + vehiculo.getMatricula() + "','" + vehiculo.getTipoVehiculo() + "')";
+					+ " VALUES (?,?)";
 			
-			st.execute(sql);
+			cn = this.getConnection();
+			pst = cn.prepareStatement(sql);
+			
+			pst.setString(1, vehiculo.getMatricula());
+			pst.setString(2, vehiculo.getTipoVehiculo());
+			
+			pst.execute();
 			
 		}catch(SQLException e) {
-			System.out.println("Error al insertar cliente: " + e.getMessage());
+			System.out.println("Error al insertar vehiculo: " + e.getMessage());
 		}finally {
 			try {
 				cn.close();
@@ -45,20 +52,23 @@ public class VehiculoDAOJDBCImpl implements com.everis.alicante.courses.becajava
 		
 	}
 
+	@Override
 	public Vehiculo read(String matricula) throws IOException {
 		
 		Connection cn = null;
-		Statement st = null;
+		PreparedStatement pst = null;
 		Vehiculo vehiculo = null;
 		
 		try {
+
+			String sql = "select * from vehiculos, tipos_vehiculo where matricula = ? and tipo_vehiculo = id_tipo";
 			
 			cn = this.getConnection();
-			st = cn.createStatement();
+			pst = cn.prepareStatement(sql);
 			
-			String sql = "select * from vehiculos, tipos_vehiculo where matricula = '" + matricula + "' and tipo_vehiculo = id_tipo";
+			pst.setString(1, matricula);
 			
-			ResultSet rs = st.executeQuery(sql);
+			ResultSet rs = pst.executeQuery();
 //			boolean hasNext = rs.next();
 			while(rs.next()) {
 				vehiculo = new Vehiculo();
@@ -81,24 +91,28 @@ public class VehiculoDAOJDBCImpl implements com.everis.alicante.courses.becajava
 		return vehiculo;
 	}
 
+	@Override
 	public void update(Vehiculo vehiculo) throws IOException {
 		// TODO Auto-generated method stub
 		
 	}
 
+	@Override
 	public void delete(String matricula) throws IOException {
 		
 		Connection cn = null;
-		Statement st = null;
+		PreparedStatement pst = null;
 		
 		try {
 			
+			String sql = "DELETE FROM VEHICULOS WHERE MATRICULA = ?";
+			
 			cn = this.getConnection();
-			st = cn.createStatement();
+			pst = cn.prepareStatement(sql);
 			
-			String sql = "DELETE FROM VEHICULOS WHERE MATRICULA = '" + matricula + "'";
+			pst.setString(1, matricula);
 			
-			int result = st.executeUpdate(sql);
+			int result = pst.executeUpdate();
 			
 			if (result == 0) {
 				System.out.println("Esa no existe, por lo tanto no la voy a borrar");
@@ -116,6 +130,7 @@ public class VehiculoDAOJDBCImpl implements com.everis.alicante.courses.becajava
 		
 	}
 
+	@Override
 	public Connection getConnection() throws IOException {
 		
 		Connection cn = null;
@@ -130,21 +145,22 @@ public class VehiculoDAOJDBCImpl implements com.everis.alicante.courses.becajava
 		return cn;
 	}
 
+	@Override
 	public List<Vehiculo> readAll() {
 		
 		Connection cn = null;
-		Statement st = null;
+		PreparedStatement pst = null;
 		Vehiculo vehiculo = null;
 		List<Vehiculo> listaVehiculos = new ArrayList<Vehiculo>();
 		
 		try {
-			
-			cn = this.getConnection();
-			st = cn.createStatement();
-			
+	
 			String sql = "SELECT * FROM VEHICULOS";
 			
-			ResultSet rs = st.executeQuery(sql);
+			cn = this.getConnection();
+			pst = cn.prepareStatement(sql);
+			
+			ResultSet rs = pst.executeQuery();
 //			boolean hasNext = rs.next();
 			while(rs.next()) {
 				vehiculo = new Vehiculo();

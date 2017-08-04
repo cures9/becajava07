@@ -77,24 +77,21 @@ public class ClienteDAOFileImpl implements ClienteDAOJDBC, ClienteDAO{
 	}
 
 	@Override
-	public Map<String, Cliente> readClientes() throws IOException {
+	public Map<String, Cliente> readClientes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public void createCliente(Cliente cliente) throws IOException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public Cliente readCliente(String nif) throws IOException {
+	public Cliente readCliente(String nif) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public void deleteCliente(String nif) {
 		// TODO Auto-generated method stub
 		

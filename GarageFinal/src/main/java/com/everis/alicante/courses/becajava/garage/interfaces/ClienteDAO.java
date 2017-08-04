@@ -16,5 +16,7 @@ public interface ClienteDAO {
 	public Connection getConnection() throws IOException;
 	public List<Cliente> readAll();
 	public Map<String, Cliente> readClientes();
+	public Cliente readCliente(String string);
+	public void createCliente(Cliente cliente);
 	
 }

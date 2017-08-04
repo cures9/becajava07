@@ -3,6 +3,7 @@ package com.everis.alicante.courses.becajava.garage.interfaces;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
+
 import com.everis.alicante.courses.becajava.garage.domain.Vehiculo;
 
 public interface VehiculoDAOJDBC {
@@ -13,5 +14,4 @@ public interface VehiculoDAOJDBC {
 	public void delete(String matricula) throws IOException;
 	public Connection getConnection() throws IOException;
 	public List<Vehiculo> readAll();
-	
 }

@@ -324,6 +324,7 @@ public class ControladorGarajeImpl implements ControladorGaraje{
 		}
 	}
 
+	@Override
 	public void eliminarVehiculo() throws GarajeException {
 		
 		VehiculoDAOJDBC vehiculoJDBC = new VehiculoDAOJDBCImpl();
@@ -339,6 +340,7 @@ public class ControladorGarajeImpl implements ControladorGaraje{
 		
 	}
 
+	@Override
 	public void leerVehiculo() throws GarajeException {
 		// TODO Auto-generated method stub
 		VehiculoDAOJDBC vehiculoJDBC = new VehiculoDAOJDBCImpl();
@@ -365,18 +367,6 @@ public class ControladorGarajeImpl implements ControladorGaraje{
 				+ " y el tipo de vehiculo es: " + vehiculo.getTipoVehiculo());
 		}
 		
-		
-	}
-
-	@Override
-	public void borrarVehiculo() throws GarajeException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void readVehiculo() throws GarajeException {
-		// TODO Auto-generated method stub
 		
 	}
 

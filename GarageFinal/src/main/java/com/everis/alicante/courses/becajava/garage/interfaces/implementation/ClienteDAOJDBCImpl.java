@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-import java.util.Map;
 
 import com.everis.alicante.courses.becajava.garage.domain.Cliente;
 import com.everis.alicante.courses.becajava.garage.interfaces.ClienteDAOJDBC;
@@ -18,6 +17,7 @@ public class ClienteDAOJDBCImpl implements ClienteDAOJDBC{
 	private final String JDBC_USR = "";
 	private final String JDBC_PWD = "";
 	
+	@Override
 	public void create(Cliente cliente) throws IOException {
 		
 		Connection cn = null;
@@ -42,18 +42,22 @@ public class ClienteDAOJDBCImpl implements ClienteDAOJDBC{
 		}
 	}
 
+	@Override
 	public Cliente read(String nif) throws IOException {
 		return null;
 	}
 
+	@Override
 	public void update(Cliente cliente) throws IOException {
 		
 	}
 
+	@Override
 	public void delete(String dni) throws IOException {
 		
 	}
 
+	@Override
 	public Connection getConnection() throws IOException {
 		
 		Connection cn = null;
@@ -69,29 +73,10 @@ public class ClienteDAOJDBCImpl implements ClienteDAOJDBC{
 		return null;
 	}
 
-
 	@Override
-	public Map<String, Cliente> readClientes() throws IOException {
-		// TODO Auto-generated method stub
+	public List<Cliente> readAll() {
+
 		return null;
-	}
-
-	@Override
-	public void createCliente(Cliente cliente) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Cliente readCliente(String nif) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteCliente(String nif) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

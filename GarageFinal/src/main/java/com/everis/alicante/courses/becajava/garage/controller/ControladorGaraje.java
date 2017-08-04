@@ -16,8 +16,7 @@ public interface ControladorGaraje {
 	void listarVehiculos() throws GarajeException;
 	void listarReservasByFecha(Date fechaInicio,Date fechaFin) throws GarajeException;
 	void insertarVehiculo() throws GarajeException;
-	void borrarVehiculo() throws GarajeException;
-	void readVehiculo() throws GarajeException;
+	void eliminarVehiculo() throws GarajeException;
+	void leerVehiculo() throws GarajeException;
 	void leerTodosVehiculos() throws GarajeException;
-
 }
